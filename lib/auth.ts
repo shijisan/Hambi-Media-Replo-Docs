@@ -5,7 +5,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import GoogleProvider from "next-auth/providers/google";
 
-export const {handlers, auth, signIn, signOut} = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
     adapter: PrismaAdapter(prisma),
     providers: [
         GoogleProvider({
@@ -20,7 +20,7 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
         signIn: "/auth/signin",
     },
     callbacks: {
-        async session({session, token}) {
+        async session({ session, token }) {
             if (token?.id) {
                 (session.user as any).id = token.id;
             }
@@ -33,6 +33,13 @@ export const {handlers, auth, signIn, signOut} = NextAuth({
             if (user) {
                 token.id = user.id
                 token.role = user.role;
+            } else {
+                const dbUser = await prisma.user.findUnique({
+                    where: { id: token.id },
+                });
+                if (dbUser) {
+                    token.role = dbUser.role; 
+                }
             }
             return token;
         }

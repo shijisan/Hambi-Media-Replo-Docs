@@ -7,8 +7,12 @@ import "@uiw/react-markdown-preview/markdown.css";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
-const MarkdownEditor: React.FC = () => {
-	const [value, setValue] = useState<string>("**Hello Boss C!** 🧠");
+interface MarkdownEditorProps {
+	onDocCreated: () => void;
+}
+
+const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ onDocCreated }) => {
+	const [value, setValue] = useState<string>("Write markdown format documentation here...");
 	const [title, setTitle] = useState("");
 	const [tagsInput, setTagsInput] = useState("");
 	const [loading, setLoading] = useState(false);
@@ -24,14 +28,8 @@ const MarkdownEditor: React.FC = () => {
 
 		const res = await fetch("/api/admin/docs", {
 			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				title,
-				content: value,
-				tags,
-			}),
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ title, content: value, tags }),
 		});
 
 		if (res.ok) {
@@ -39,29 +37,33 @@ const MarkdownEditor: React.FC = () => {
 			setTitle("");
 			setValue("");
 			setTagsInput("");
+			onDocCreated();
 		} else {
 			alert("Failed to create document");
 		}
+
 		setLoading(false);
 	};
 
 	return (
 		<form className="flex flex-col gap-4" onSubmit={createDoc}>
-			<input
-				type="text"
-				placeholder="Title"
-				value={title}
-				onChange={(e) => setTitle(e.target.value)}
-				className="border p-2 rounded"
-				required
-			/>
-			<MDEditor value={value} onChange={(val) => setValue(val || "")} preview="live" previewOptions={{ className: "markdown" }} />
-			<textarea
-				placeholder="Add tags/keywords here (tag1, tag2, tag3)"
-				value={tagsInput}
-				onChange={(e) => setTagsInput(e.target.value)}
-				className="border p-2 rounded"
-			/>
+			<MDEditor value={value} onChange={(val) => setValue(val || "")} preview="live" style={{height: "40vh"}} previewOptions={{ className: "markdown" }} />
+			<div className="flex gap-4">
+				<input
+					type="text"
+					placeholder="Title"
+					value={title}
+					onChange={(e) => setTitle(e.target.value)}
+					className="border p-2 rounded max-w-sm w-full"
+					required
+				/>
+				<textarea
+					placeholder="Add tags/keywords here (tag1, tag2, tag3, etc...)"
+					value={tagsInput}
+					onChange={(e) => setTagsInput(e.target.value)}
+					className="border p-2 rounded w-full"
+				/>
+			</div>
 			<button type="submit" disabled={loading} className="bg-blue-500 text-white p-2 rounded">
 				{loading ? "Creating..." : "Create Doc"}
 			</button>

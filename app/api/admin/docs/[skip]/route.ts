@@ -1,22 +1,17 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-interface Params {
-  skip: string;
-}
-
 export async function GET(
   request: Request,
-  context: { params: { skip: string } }
+  context: { params: Promise<{ skip: string }> }
 ) {
-  const skip = parseInt(context.params.skip);
+  const { skip } = await context.params;
   const take = 10;
 
   const docs = await prisma.documentation.findMany({
     take,
-    skip,
+    skip: parseInt(skip),
   });
 
   return NextResponse.json(docs);
 }
-

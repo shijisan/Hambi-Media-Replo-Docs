@@ -4,6 +4,8 @@ import "./globals.css";
 
 import SessionWrapper from "@/components/auth/SessionWrapper";
 import ErrorAlert from "@/components/auth/ErrorAlert";
+import Nav from "@/components/Nav";
+import { ThemeProvider } from "@/context/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,10 +32,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ErrorAlert />
-        <SessionWrapper>
-          {children}
-        </SessionWrapper>
+        <ThemeProvider>
+          <Nav />
+          <ErrorAlert />
+          <SessionWrapper>
+            <div className="pt-[8vh]">
+              {children}
+            </div>
+          </SessionWrapper>
+        </ThemeProvider>
+
       </body>
     </html>
   );

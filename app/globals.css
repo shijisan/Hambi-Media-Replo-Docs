@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Garage Gothic";
+  src: url("/fonts/fonnts.com-GarageGothic_Bold.otf");
+}
+
+.gg{
+  font-family: "Garage Gothic";
+}
+
 :root {
-  --background: #ffffff;
+  --background: #fafafa;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root.dark {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
 }
 
 body {
@@ -102,4 +102,59 @@ body {
 
 .markdown ol{
   list-style-type: decimal!important  ;
+}
+
+.markdown ul{
+  list-style-type: disc!important;
+}
+
+
+@layer base{
+  .card{
+    @apply p-8 rounded-xl border-neutral-200 border
+  }
+  input{
+    @apply bg-white border shadow-sm border-neutral-200 focus:outline-none ring-2 focus:ring-teal-700 px-4 ring-neutral-200 py-2
+
+  }
+  .dark input{
+    @apply bg-neutral-700 ring-transparent focus:ring-teal-700
+  }
+}
+
+
+@layer components{
+
+  *{
+    @apply transition-colors
+  }
+
+  .btn{
+    @apply text-white px-4 py-2 rounded-sm hover:brightness-95 active:opacity-95 hover:cursor-pointer;
+  }
+
+  nav{
+    @apply bg-teal-600
+  }
+
+  .dark .card{
+    @apply bg-neutral-800 border
+  }
+
+  .dark input{
+    @apply border-none;
+  }
+
+  .doc{
+    @apply bg-white
+  }
+
+  .dark .doc{
+    @apply bg-neutral-800
+  }
+
+  .dark .wmde-markdown h1{
+    @apply border-[white!important]
+  }
+
 }

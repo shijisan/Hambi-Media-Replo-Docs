@@ -22,7 +22,7 @@ export default function DocumentationView() {
 
 		const fetchDoc = async () => {
 			try {
-				const res = await fetch(`/api/docs/${params.docId}`);
+				const res = await fetch(`/api/docs/id/${params.docId}`);
 				if (res.ok) {
 					const data = await res.json();
 					setDoc(data);
@@ -38,13 +38,15 @@ export default function DocumentationView() {
 	}, [params?.docId]);
 
 	return (
-		<main>
+		<main className="flex items-start justify-center w-full min-h-screen pt-[5vh]">
 			{doc ? (
 				<>
-					<h1>{doc.title}</h1>
-					<h6>Author: {doc?.author?.name}</h6>
-					<h6>Updated on: {new Date(doc.updatedAt).toLocaleString()}</h6>
-					<MarkdownPreview className="markdown" source={doc?.content || ''} />
+					<div className="max-w-3xl h-fit w-full border border-neutral-300 p-6 doc flex flex-col gap-2">
+						<h1 className="text-3xl">{doc.title}</h1>
+						<h6 className="text-xs">Author: {doc?.author?.name}</h6>
+						<h6 className="text-xs">Updated on: {new Date(doc.updatedAt).toLocaleString()}</h6>
+						<MarkdownPreview style={{backgroundColor: "transparent", marginTop: "1rem"}} className="markdown" source={doc?.content || ''} />
+					</div>
 
 				</>
 			) : (

@@ -1,6 +1,8 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  
 }
 
 generator client {
@@ -35,6 +37,8 @@ model Documentation {
   tags      String[]
   authorId  String
   author    User     @relation(name: "documentationAuthor", fields: [authorId], references: [id])
+  docBlockId String?
+  docBlock  DocBlock? @relation(fields: [docBlockId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -76,4 +80,16 @@ model VerificationToken {
   expires    DateTime
 
   @@id([identifier, token])
+}
+
+model DocBlock {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  order       Int      @default(0)
+  documents   Documentation[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("docblocks")
 }

@@ -2,10 +2,6 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 
-interface Params {
-  skip: string;
-}
-
 export async function POST(req: Request){
 
   const session = await auth();

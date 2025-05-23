@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 
 export default function DocSearch() {
 	const [keyword, setKeyword] = useState("")
-	const [results, setResults] = useState<any[]>([])
+	const [results, setResults] = useState<Doc[]>([])
 
 	const router = useRouter();
 
@@ -13,6 +13,11 @@ export default function DocSearch() {
 		const res = await fetch(`/api/docs/keyword/${searchTerm}`);
 		const data = await res.json();
 		setResults(data);
+	};
+
+	type Doc = {
+		id: string;
+		title: string;
 	};
 
 

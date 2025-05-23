@@ -61,7 +61,7 @@ export default function Admin() {
         {activeTab === "dashboard" && (
           <div>
             <h1 className="text-2xl font-bold mb-4">📊 Welcome to Your Dashboard!</h1>
-            <p className="text-muted">Here's where your admin insights will go... someday 😎</p>
+            <p className="text-muted">Here&apos;s where your admin insights will go... someday 😎</p>
           </div>
         )}
 

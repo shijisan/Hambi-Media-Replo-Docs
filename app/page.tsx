@@ -1,4 +1,5 @@
 import DocSearch from "@/components/DocSearch";
+import Image from "next/image";
 
 export default function HomePage() {
 	return (
@@ -9,10 +10,10 @@ export default function HomePage() {
 					<div className="w-1/2">
 						<h1 className="text-5xl font-medium gg">Hello Trainee! 👋</h1>
 						<br />
-						<h2 className="text-xl">Welcome to Hambi Media's Replo Documentation</h2>
+						<h2 className="text-xl">Welcome to Hambi Media&apos;s Replo Documentation</h2>
 						<br />
 						<p className="max-w-lg">
-							This is a private asset, please do not share. This web app compiles and translates your HTML, CSS, Javascript way of thinking into Replo's way of execution!
+							This is a private asset, please do not share. This web app compiles and translates your HTML, CSS, Javascript way of thinking into Replo&apos;s way of execution!
 						</p>
 
 						<div className="flex gap-2 mt-8">
@@ -21,7 +22,7 @@ export default function HomePage() {
 						</div>
 					</div>
 					<div className="w-1/2 flex justify-center items-center">
-						<img className="w-3/4" src="/hero.svg" alt="Hero image" />
+						<Image className="w-3/4" src="/hero.svg" alt="Hero image" />
 					</div>
 
 				</header>

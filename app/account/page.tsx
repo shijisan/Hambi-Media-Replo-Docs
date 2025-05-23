@@ -1,6 +1,6 @@
 "use client"
 
-import { useSession, signOut, signIn } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
@@ -10,13 +10,13 @@ export default function Account() {
     const { data: session, update } = useSession();
     const router = useRouter();
 
-    const refreshSession = async () => {
-        await update();
-    };
     useEffect(() => {
+        const refreshSession = async () => {
+            await update();
+        };
         refreshSession();
+    }, [update]);
 
-    }, [])
 
 
 

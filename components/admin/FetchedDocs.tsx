@@ -1,5 +1,5 @@
   interface FetchedDocsProps {
-    docs: any[];
+    docs: Doc[];
     onOpen: (docId: string) => void;
   }
 
